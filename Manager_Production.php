@@ -2,6 +2,8 @@
 <html lang='en_US'>
     <head>
         <title>Manager Product Each Week</title>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>
             html, body {
                 width: 100%;
@@ -9,6 +11,7 @@
             }
             body {
                 background-color: white;
+                overflow: auto;
             }
             h1 {
                 margin-left: 15px;
@@ -17,7 +20,9 @@
             h2 {margin-left: 30px;}
             h3 {margin-left: 36px;}
             p {margin-left: 40px;}
-            input {width: 120px;}
+            input {width: 120px;
+                height: 24px;
+            }
 
             .div_head {
                 width: 100%;
@@ -26,6 +31,7 @@
                 background-size: 100% 200px;
                 background-repeat: no-repeat;
                 position: relative;
+                border-bottom: 1px solid black;
                 animation-name: headpage;
                 animation-duration: 12s;
                 animation-delay: 4s;
@@ -42,7 +48,6 @@
                 margin: 0;
                 padding: 0;
                 overflow: hidden;
-                border: 1px solid #e7e7e7;
                 background-color: black;
             }
 
@@ -67,6 +72,49 @@
                 background-color: #ddd;
             }
 
+            /*Tham khao tren W3School for slideshow*/
+            .mySlides {display:none}
+            .w3-left, .w3-right, .w3-badge {cursor:pointer}
+            .w3-badge {height:16px;width:16px;padding:0}
+
+            .fa {
+                font-size: 100px;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            .fa-thumbs-up:hover {
+                color: darkblue;
+            }
+
+            .fa-thumbs-down:hover {
+                color: darkred;
+            }
+
+
+            /*Tu nghi add button with each slide*/
+            .container {position: relative;}
+            .container img {
+                width: 100%;
+                height: 40px;
+            }
+            .container .btn {
+                position: absolute;
+                transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                background-color: rgb(21, 101, 243);
+                color: white;
+                font-size: 18px;
+                padding: 12px 24px;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+                text-align: center;
+            }
+
+            .container .btn:hover {
+                background-color: rgb(15, 7, 180);
+            }
 
             .error {
                 color: #FF0000;
@@ -75,8 +123,8 @@
             
             .div_design {
                 float: left;
-                width: 49.5%;
-                height: 500px;
+                width: 50%;
+                height: 550px;
                 border: 2px solid green;
             }
             .clearfix::after {
@@ -106,15 +154,49 @@
     </head>
     <body onload="draw_Chart()">
         <!-- Heading Web -->
-        <div class="div_head">
-            <h1>Manager Production - My Company</h1>
-        </div>
-        <ul>
-            <li><button onclick="show_Sp()">Products</button></li>
-            <li><button onclick="show_Tk()">Statistic</button></li>
-            <li><button onclick="show_Lh()">Contact</button></li>
-        </ul>
+        <nav style="position: fixed-top">
+            <ul>
+                <li><button onclick="show_Sp()">Products</button></li>
+                <li><button onclick="show_Tk()">Statistic</button></li>
+                <li><button onclick="show_Lh()">Contact</button></li>
+                <li style="float: right;"><button>Log In</button></li>
+            </ul>
 
+        </nav>
+        <nav style="">
+            <div class="w3-display-container" style="width:100%; height: 250px;">
+                <div class="mySlides container">
+                    <img src="/Image/header1.jpg" style="width:100%; height: 250px;">
+                    <button class="btn" style="top: 20%; left: 50%">Log in Now!</button>
+                </div>
+
+                <div class="mySlides container">
+                    <img src="/Image/header2.jpg" style="width:100%; height: 250px;">
+                    <button class="btn" style="top: 35%; left: 90%">View All Product</button>
+                </div>
+                
+                
+                <img class="mySlides" src="/Image/header3.jpg" style="width:100%; height: 250px">
+                
+                <div class="mySlides container">
+                    <img src="/Image/header4.jpg" style="width:100%; height: 250px;">
+                    <i class="fa fa-thumbs-up" style="position: absolute; top: 25%; left: 60%"></i>
+                    <i class="fa fa-thumbs-down" style="position: absolute; top: 25%; left: 70%"></i>
+                </div>
+                
+                <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
+                    <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
+                    <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
+                    <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
+                    <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
+                    <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
+                    <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(4)"></span>
+                </div>
+            </div>
+        
+        </nav>
+        
+        
         <div id="sp">
             <p>Something</p>
         </div>
@@ -226,7 +308,7 @@
                 </div>
                 <div class="div_design">
                     <h1 style="align: center;">Sale Chart</h1>
-                    <canvas id="sale_Chart" style="position: relative;width: 99.9%; height:84%; background-color: white; border: 1px solid black;">
+                    <canvas id="sale_Chart" style="position: relative;width: 99.9%; height:86%; background-color: white; border: 1px solid black;">
                         
                     </canvas>
                     
@@ -245,7 +327,7 @@
         <div id="lh">
             <div>
                 <p>
-                    <i>Created by <a href="mailto: nasuss15@gmail.com">NguyenNhatTung_20002177</a></i>
+                    <i>Created by <a href="mailto: nasuss15@gmail.com">NguyenNhatTung_20002177</a> & <a href="mailto: ngodanghuy_t65@hus.edu.vn">NgoDangHuy_20002132</a> & <a href="mailto: nguyentrongson_t65@hus.edu.vn">NguyenTrongSon_20002160</a></i>
                 </p>
                 <p>Phone: 0399402431</p>
                 <p>The project used to present in Applied Informatics Subject.</p>
@@ -306,7 +388,34 @@
         setInterval(drawChart, 1000);
         
     </script>
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
 
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function currentDiv(n) {
+            showDivs(slideIndex = n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            if (n > x.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = x.length}
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" w3-white", "");
+            }
+            x[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " w3-white";
+        }
+</script>
 
     
 </html>
