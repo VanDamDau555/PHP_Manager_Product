@@ -132,6 +132,41 @@
                 clear: both;
                 display: table;
             }
+
+            /* Using in Login Screen */
+            #login_screen {
+                display: none;
+                position: fixed;
+                min-width: 600px;
+                height: 600px;
+                top: 150px;
+                left: 25%;
+                right: 25%;
+                font-size: 24px;
+                background-color: lightgreen;
+                border: 2px solid red;
+                border-radius: 24px;
+                padding: 50px;
+            }
+
+            #login_screen button:hover {
+                opacity: 0.8;
+            }
+            #login_screen input[type=text], input[type=password]{
+                width: 100%;
+                height: 30px; 
+                padding: 12px 20px; 
+                margin: 8px 0;
+                border: 1px solid #ccc;
+                box-sizing: border-box;
+            }
+            .cancelbtn {
+                width: auto;
+                padding: 10px 18px;
+                background-color: #f44336;
+            }
+
+            /* 3 menubar */
             #sp {
                 display: none;
             }
@@ -154,185 +189,256 @@
     </head>
     <body onload="draw_Chart()">
         <!-- Heading Web -->
-        <nav style="position: fixed-top">
-            <ul>
-                <li><button onclick="show_Sp()">Products</button></li>
-                <li><button onclick="show_Tk()">Statistic</button></li>
-                <li><button onclick="show_Lh()">Contact</button></li>
-                <li style="float: right;"><button>Log In</button></li>
-            </ul>
+        <div style="position: relative">
+            <nav style="position: fixed-top">
+                <ul>
+                    <li><button onclick="show_Sp()">Products</button></li>
+                    <li><button onclick="show_Tk()">Statistic</button></li>
+                    <li><button onclick="show_Lh()">Contact</button></li>
+                    <li style="float: right;"><button onclick="show_Login()">Login</button></li>
+                    <li><button><?php echo "<p>".$login_current."<p>";?></button></li>
+                </ul>
 
-        </nav>
-        <nav style="">
-            <div class="w3-display-container" style="width:100%; height: 250px;">
-                <div class="mySlides container">
-                    <img src="/Image/header1.jpg" style="width:100%; height: 250px;">
-                    <button class="btn" style="top: 20%; left: 50%">Log in Now!</button>
-                </div>
+            </nav>
+            <nav style="">
+                <div class="w3-display-container" style="width:100%; height: 250px;">
+                    <div class="mySlides container">
+                        <img src="/Image/header1.jpg" style="width:100%; height: 250px;">
+                        <button class="btn" onclick="show_Login()" style="top: 20%; left: 50%">Log in Now!</button>
+                    </div>
 
-                <div class="mySlides container">
-                    <img src="/Image/header2.jpg" style="width:100%; height: 250px;">
-                    <button class="btn" style="top: 35%; left: 90%">View All Product</button>
+                    <div class="mySlides container">
+                        <img src="/Image/header2.jpg" style="width:100%; height: 250px;">
+                        <button class="btn" style="top: 35%; left: 90%">View All Product</button>
+                    </div>
+                    
+                    
+                    <img class="mySlides" src="/Image/header3.jpg" style="width:100%; height: 250px">
+                    
+                    <div class="mySlides container">
+                        <img src="/Image/header4.jpg" style="width:100%; height: 250px;">
+                        <i class="fa fa-thumbs-up" style="position: absolute; top: 25%; left: 60%"></i>
+                        <i class="fa fa-thumbs-down" style="position: absolute; top: 25%; left: 70%"></i>
+                    </div>
+                    
+                    <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
+                        <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
+                        <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
+                        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
+                        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
+                        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
+                        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(4)"></span>
+                    </div>
                 </div>
-                
-                
-                <img class="mySlides" src="/Image/header3.jpg" style="width:100%; height: 250px">
-                
-                <div class="mySlides container">
-                    <img src="/Image/header4.jpg" style="width:100%; height: 250px;">
-                    <i class="fa fa-thumbs-up" style="position: absolute; top: 25%; left: 60%"></i>
-                    <i class="fa fa-thumbs-down" style="position: absolute; top: 25%; left: 70%"></i>
-                </div>
-                
-                <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
-                    <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
-                    <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
-                    <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
-                    <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
-                    <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
-                    <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(4)"></span>
-                </div>
+            
+            </nav>
+            
+            
+            <div id="sp">
+                <p>Something</p>
+                <?php
+                    echo $login_current;
+                ?>
             </div>
-        
-        </nav>
-        
-        
-        <div id="sp">
-            <p>Something</p>
-        </div>
 
-        
-
-        <div id="tk">
-            <?php
-                print "";
-                print "<h2>Sale in Week</h2>";
-
-                $product = "";
-                $Monday = $Tuesday = $Wednesday = $Thursday = $Friday = $Saturday = $Sunday = 0;
-                $MonErr = $TuesErr = $WednesErr = $ThursErr = $FriErr = $SaturErr = $SunErr = "";
-                $Err = "You didn't choose the quantity";
-                if ($_SERVER["REQUEST_METHOD"] == "POST"){
-                    $product = test_input($_POST["product"]);
-                    if (empty($_POST["monday"])){
-                        $MonErr = $Err;
-                    }else{
-                        $Monday = test_input($_POST["monday"]);
-                    }
-                    
-                    if (empty($_POST["tuesday"])){
-                        $TuesErr = $Err;
-                    }else{
-                        $Tuesday = test_input($_POST["tuesday"]);
-                    }
-
-                    if (empty($_POST["wednesday"])){
-                        $WednesErr = $Err;
-                    }else{
-                        $Wednesday = test_input($_POST["wednesday"]);
-                    }
-                    
-                    if (empty($_POST["thursday"])){
-                        $ThursErr = $Err;
-                    }else{
-                        $Thursday = test_input($_POST["thursday"]);
-                    }
-
-                    if (empty($_POST["friday"])){
-                        $FriErr= $Err;
-                    }else{
-                        $Friday = test_input($_POST["friday"]);
-                    }
-
-                    if (empty($_POST["saturday"])){
-                        $SaturErr = $Err;
-                    }else{
-                        $Saturday = test_input($_POST["saturday"]);
-                    }
-
-                    if (empty($_POST["sunday"])){
-                        $SunErr = $Err;
-                    }else{
-                        $Sunday = test_input($_POST["sunday"]);
-                    }
-                    
-                    
-                    //Calculate the change rate for next step
-                    $change1 = $Tuesday - $Monday;
-                    $change2 = $Wednesday - $Tuesday;
-                    $change3 = $Thursday - $Wednesday;
-                    $change4 = $Friday - $Thursday;
-                    $change5 = $Saturday - $Friday;
-                    $change6 = $Sunday - $Saturday;
-                    
-                }
-
-
-                function test_input($data){
-                    $data = trim($data);
-                    $data = stripslashes($data);
-                    $data = htmlspecialchars($data);
-                    return $data;
-                }
-                
-            ?>
             
-            
-            <div class="clearfix">
-                <div class="div_design" style="padding-left: 10px;">
-                    <h1>Statistics</h1>
-                    <form method="post" class="form_design" style="font-size: 18px;" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                        Production: <select name="product" style="font-size: 18px;">
-                            <option value="Apple MacBook Air M1 2020">Apple MacBook Air M1 2020</option>
-                            <option value="Asus VivoBook Go 14">Asus VivoBook Go 14</option>
-                            <option value="MSI GF63 Thin">MSI GF63 Thin</option>
-                            <option value="MSI Gaming Bravo 15">MSI Gaming Bravo 15</option>
-                        </select>
-                        <br><br>
-                        Monday: <input type="number" name="monday"> <span class="error"><?php print $MonErr?></span>
-                        <br><br>
-                        Tuesday: <input type="number" name="tuesday"> <span class="error"><?php print $TuesErr?></span>
-                        <br><br>
-                        Wednesday: <input type="number" name="wednesday"> <span class="error"><?php print $WednesErr?></span>
-                        <br><br>
-                        Thursday: <input type="number" name="thursday"> <span class="error"><?php print $ThursErr?></span>
-                        <br><br>
-                        Friday: <input type="number" name="friday"> <span class="error"><?php print $FriErr?></span>
-                        <br><br>
-                        Saturday: <input type="number" name="saturday"> <span class="error"><?php print $SaturErr?></span>
-                        <br><br>
-                        Sunday: <input type="number" name="sunday"> <span class="error"><?php print $SunErr?></span>
-                        <br><br>
-                        <input type="submit" name="submit" value="Submit" style="width: 200px; background-color: red;">  
-                    </form>
-                </div>
-                <div class="div_design">
-                    <h1 style="align: center;">Sale Chart</h1>
-                    <canvas id="sale_Chart" style="position: relative;width: 99.9%; height:86%; background-color: white; border: 1px solid black;">
+
+            <div id="tk">
+                <?php
+                    print "";
+                    print "<h2>Sale in Week</h2>";
+
+                    $product = "";
+                    $Monday = $Tuesday = $Wednesday = $Thursday = $Friday = $Saturday = $Sunday = 0;
+                    $MonErr = $TuesErr = $WednesErr = $ThursErr = $FriErr = $SaturErr = $SunErr = "";
+                    $Err = "You didn't choose the quantity";
+                    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+                        $product = test_input($_POST["product"]);
+                        if (empty($_POST["monday"])){
+                            $MonErr = $Err;
+                        }else{
+                            $Monday = test_input($_POST["monday"]);
+                        }
                         
-                    </canvas>
+                        if (empty($_POST["tuesday"])){
+                            $TuesErr = $Err;
+                        }else{
+                            $Tuesday = test_input($_POST["tuesday"]);
+                        }
+
+                        if (empty($_POST["wednesday"])){
+                            $WednesErr = $Err;
+                        }else{
+                            $Wednesday = test_input($_POST["wednesday"]);
+                        }
+                        
+                        if (empty($_POST["thursday"])){
+                            $ThursErr = $Err;
+                        }else{
+                            $Thursday = test_input($_POST["thursday"]);
+                        }
+
+                        if (empty($_POST["friday"])){
+                            $FriErr= $Err;
+                        }else{
+                            $Friday = test_input($_POST["friday"]);
+                        }
+
+                        if (empty($_POST["saturday"])){
+                            $SaturErr = $Err;
+                        }else{
+                            $Saturday = test_input($_POST["saturday"]);
+                        }
+
+                        if (empty($_POST["sunday"])){
+                            $SunErr = $Err;
+                        }else{
+                            $Sunday = test_input($_POST["sunday"]);
+                        }
+                        
+                        
+                        //Calculate the change rate for next step
+                        $change1 = $Tuesday - $Monday;
+                        $change2 = $Wednesday - $Tuesday;
+                        $change3 = $Thursday - $Wednesday;
+                        $change4 = $Friday - $Thursday;
+                        $change5 = $Saturday - $Friday;
+                        $change6 = $Sunday - $Saturday;
+                        
+                    }
+
+
+                    function test_input($data){
+                        $data = trim($data);
+                        $data = stripslashes($data);
+                        $data = htmlspecialchars($data);
+                        return $data;
+                    }
+                    
+                ?>
+                
+                
+                <div class="clearfix">
+                    <div class="div_design" style="padding-left: 10px;">
+                        <h1>Statistics</h1>
+                        <form method="post" class="form_design" style="font-size: 18px;" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                            Production: <select name="product" style="font-size: 18px;">
+                                <option value="Apple MacBook Air M1 2020">Apple MacBook Air M1 2020</option>
+                                <option value="Asus VivoBook Go 14">Asus VivoBook Go 14</option>
+                                <option value="MSI GF63 Thin">MSI GF63 Thin</option>
+                                <option value="MSI Gaming Bravo 15">MSI Gaming Bravo 15</option>
+                            </select>
+                            <br><br>
+                            Monday: <input type="number" name="monday"> <span class="error"><?php print $MonErr?></span>
+                            <br><br>
+                            Tuesday: <input type="number" name="tuesday"> <span class="error"><?php print $TuesErr?></span>
+                            <br><br>
+                            Wednesday: <input type="number" name="wednesday"> <span class="error"><?php print $WednesErr?></span>
+                            <br><br>
+                            Thursday: <input type="number" name="thursday"> <span class="error"><?php print $ThursErr?></span>
+                            <br><br>
+                            Friday: <input type="number" name="friday"> <span class="error"><?php print $FriErr?></span>
+                            <br><br>
+                            Saturday: <input type="number" name="saturday"> <span class="error"><?php print $SaturErr?></span>
+                            <br><br>
+                            Sunday: <input type="number" name="sunday"> <span class="error"><?php print $SunErr?></span>
+                            <br><br>
+                            <input type="submit" name="submit" value="Submit" style="width: 200px; background-color: red;">  
+                        </form>
+                    </div>
+                    <div class="div_design">
+                        <h1 style="align: center;">Sale Chart</h1>
+                        <canvas id="sale_Chart" style="position: relative;width: 99.9%; height:86%; background-color: white; border: 1px solid black;">
+                            
+                        </canvas>
+                        
+                    </div>
                     
                 </div>
                 
+                
+                <?php
+                    print "<br> <br>";
+                    print "<h3>Collect Information:</h3>";
+                    print "<p>Product: " .$product. "</p>";
+                    print "<p>Total: ".$Monday+$Tuesday+$Wednesday+$Thursday+$Friday+$Saturday+$Sunday."</p><br>";
+                ?>
             </div>
-            
-            
+            <div id="lh">
+                <div>
+                    <p>
+                        <i>Created by <a href="mailto: nasuss15@gmail.com">NguyenNhatTung_20002177</a> & <a href="mailto: ngodanghuy_t65@hus.edu.vn">NgoDangHuy_20002132</a> & <a href="mailto: nguyentrongson_t65@hus.edu.vn">NguyenTrongSon_20002160</a></i>
+                    </p>
+                    <p>Phone: 0399402431</p>
+                    <p>The project used to present in Applied Informatics Subject.</p>
+                </div>
+            </div>
+
+
+            <div id="login_screen" style="position: fixed;">
+                <!--Login PHP-->
+                <?php
+                    include 'Account_Data.php';
+                    $login_current = "";
+                    $user = "";
+                    $password = "";
+                    $save = 0;
+                    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+                        $user = input($_POST["uname"]);
+                        $password = input($_POST["password"]);
+
+
+                        for ($row = 0; $row < count($account); $row++) {
+                            $save = $account[$row][1];    
+                            if (($user == $account[$row][0]) && ($password == $account[$row][1])) {
+                                $login_current = $user;
+                                break;
+                            }else {
+                                $login_current = "";
+                            }  
+                        }
+                    }
+                    
+                    function input($data){
+                        $data = trim($data);
+                        $data = stripslashes($data);
+                        $data = htmlspecialchars($data);
+                        return $data;
+                    }
+
+                    
+                ?>
+
+                <h2 style="margin-left: -12px;">Login</h2>
+
+                
+                <div>
+                    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        <label for="uname"><b>Username:</b></label>
+                        <input type="text" name="uname" id="" placeholder="Enter Username" required>
+
+                        <label for="password"><b>Password:</b></label>
+                        <input type="password" name="password" id="" placeholder="Enter Password"  required>
+                        <br><br>
+                        <button type="submit" style="width: 100%">Login</button><br>
+                        <label>
+                            <input type="checkbox" checked="checked" name="remember"> Remember me
+                        </label>
+                        <br><br>
+                        <div>
+                            <button type="button" class="cancelbtn" onclick="hide_Login()">Cancel</button>
+                            <span class="cr_Account" style="float: right;"><a href="#">Creat Account</a></span>
+                        </div>
+                    </form>    
+                </div>
+                
+            </div>
+
             <?php
-                print "<br> <br>";
-                print "<h3>Collect Information:</h3>";
-                print "<p>Product: " .$product. "</p>";
-                print "<p>Total: ".$$Monday+$Tuesday+$Wednesday+$Thursday+$Friday+$Saturday+$Sunday."</p><br>";
+                echo $login_current;
             ?>
         </div>
-        <div id="lh">
-            <div>
-                <p>
-                    <i>Created by <a href="mailto: nasuss15@gmail.com">NguyenNhatTung_20002177</a> & <a href="mailto: ngodanghuy_t65@hus.edu.vn">NgoDangHuy_20002132</a> & <a href="mailto: nguyentrongson_t65@hus.edu.vn">NguyenTrongSon_20002160</a></i>
-                </p>
-                <p>Phone: 0399402431</p>
-                <p>The project used to present in Applied Informatics Subject.</p>
-            </div>
-        </div>
+        
         
         
         
@@ -354,6 +460,14 @@
             document.getElementById("sp").style.display = "none";
             document.getElementById("tk").style.display = "none";
             document.getElementById("lh").style.display = "block";
+        }
+
+        function show_Login(){
+            document.getElementById('login_screen').style.display = "block";
+        }
+
+        function hide_Login(){
+            document.getElementById('login_screen').style.display = "none";
         }
     </script>
 
