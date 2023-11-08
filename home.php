@@ -182,7 +182,9 @@
                 <li><button onclick="show_Sp()">Products</button></li>
                 <li><button onclick="show_Tk()">Statistic</button></li>
                 <li><button onclick="show_Lh()">Contact</button></li>
-                <li style="float: right;"><button>Log In</button></li>
+                <!-- <li style="float: right;"><button>Log Out</button></li> -->
+                <li style="float: right;"><button onclick="logOut()">Log Out</button></li>
+
             </ul>
 
         </nav>
@@ -190,7 +192,7 @@
             <div class="w3-display-container" style="width:100%; height: 250px;">
                 <div class="mySlides container">
                     <img src="/Image/header1.jpg" style="width:100%; height: 250px;">
-                    <button class="btn" style="top: 20%; left: 50%">Log in Now!</button>
+                    <!-- <button class="btn" style="top: 20%; left: 50%">Log in Now!</button> -->
                 </div>
 
                 <div class="mySlides container">
@@ -439,6 +441,11 @@
             x[slideIndex-1].style.display = "block";  
             dots[slideIndex-1].className += " w3-white";
         }
+</script>
+<script>
+    function logOut() {
+        window.location.href = "logout.php";
+    }
 </script>
 
     
