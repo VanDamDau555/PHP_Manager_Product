@@ -184,7 +184,7 @@
                         <li><button onclick="show_Sp()">Products</button></li>
                         <li><button onclick="show_Tk()">Statistic</button></li>
                         <li><button onclick="show_Lh()">Contact</button></li>
-                        <li style="float: right;"><button onclick="show_Login()">Log out</button></li>
+                        <li style="float: right;"><button onclick="logOut()">Log out</button></li>
                     </ul>
 
                 </nav>
@@ -538,7 +538,11 @@
             x[slideIndex-1].style.display = "block";  
             dots[slideIndex-1].className += " w3-white";
         }
-</script>
-
+    </script>
+    <script>
+        function logOut() {
+            window.location.href = "logout.php";
+        }
+    </script>
     
 </html>
