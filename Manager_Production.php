@@ -98,6 +98,20 @@
             .mycontainer .btn:hover {
                 background-color: rgb(15, 7, 180);
             }
+            /*showProduct_container class */
+            .showProduct_container {
+                height: 300px;
+            }
+
+            .showProduct_container div {
+                float: left;
+                width: 30%;
+                height: 80%;
+                margin: 25px;
+                justify-content: center;
+                border: 1px solid black;
+                border-radius: 20px;
+            }
 
             .container label {
                 font-size: 20px;
@@ -197,7 +211,7 @@
 
                         <div class="mySlides mycontainer">
                             <img src="/Image/header2.jpg" style="width:100%; height: 250px;">
-                            <button class="btn" style="top: 35%; left: 90%">View All Product</button>
+                            <a class="btn" style="top: 35%; left: 90%" href="http://localhost/phpmyadmin/index.php?route=/sql&db=products&table=products" target="_blank">View All Product</a>
                         </div>
                         
                         
@@ -233,19 +247,42 @@
                             $soluong_sp = $_POST["soluong_sp"];
                             $anh_sp = $_POST["anh_sp"];
 
+                            //Save in mysql table
                             if ($conn -> query("INSERT INTO products (ten_sp, id_sp, soluong_sp, gia_sp, anh_sp) VALUES (N'$ten_sp', N'$id_sp', N'$soluong_sp', N'$gia_sp', N'$anh_sp')")){
                                 echo "<script>alert('Add successed');</script>";
                             } else{
                                 echo "<script>alert('Add not successed');</script>";
                             }
+                            
+                            
                         }
                         $conn -> close();
                     ?>
 
                     <!--Show image product-->
-                    <h2>All Product</h2>
-                    <div style="width: 100%; height: 300px;">
-                        <p>Show all products</p>
+                    <h2>Some Product</h2>
+
+                    <?php
+                        $source = "D:/Hoc_tap/PHP_Learning/Image/"
+                    ?>
+                    <div class="showProduct_container">
+                        <div>
+                            <img src='/Image/L_1.jpg' alt="" style="width: 90%; height: 70%; padding-left: 10%;">
+                            <p>Apple MacBook Air M1 2020 <br>
+                                Số lượng: 500</p>
+                        </div>
+
+                        <div>
+                            <img src='/Image/L_2.jpg' alt="" style="width: 90%; height: 70%; padding-left: 10%;">
+                            <p>Asus VivoBook Go 14 <br>
+                                Số lượng: 660</p>
+                        </div>
+
+                        <div>
+                            <img src='/Image/L_3.jpg' alt="" style="width: 90%; height: 70%; padding-left: 10%;">
+                            <p>MSI G63 Thin 14 <br>
+                                Số lượng: 620</p>
+                        </div>
                     </div>
 
                     <h2 style="background-color: lightgreen; width: 75%;">Add New Product Into Storage</h2>
@@ -289,9 +326,9 @@
 
                             <!-- File Button --> 
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="anh_sp">Nguồn ảnh:</label>
+                                <label class="col-md-4 control-label" for="anh_sp">Ảnh:</label>
                                 <div class="col-md-4">
-                                    <input id="anh_sp" name="Nhập nguồn ảnh" class="input-file" type="file">
+                                    <input id="anh_sp" name="anh_sp" class="input-file" type="file">
                                 </div>
                             </div>
 
@@ -311,18 +348,25 @@
                 </div>
 
                 
-
+                <!--Include Vẽ biểu đồ thống kê-->
                 <div id="tk">
+                    <?php require_once 'connect.php'  ?>
                     <?php
                         print "";
                         print "<h2>Sale in Week</h2>";
 
                         $product = "";
                         $Monday = $Tuesday = $Wednesday = $Thursday = $Friday = $Saturday = $Sunday = 0;
-                        $MonErr = $TuesErr = $WednesErr = $ThursErr = $FriErr = $SaturErr = $SunErr = "";
+                        $proErr = $MonErr = $TuesErr = $WednesErr = $ThursErr = $FriErr = $SaturErr = $SunErr = "";
                         $Err = "You didn't choose the quantity";
+                        //Post method just active if each value != 0 or ""
                         if ($_SERVER["REQUEST_METHOD"] == "POST"){
-                            $product = test_input($_POST["product"]);
+                            if (empty($_POST["tuesday"])){
+                                $proErr = $Err;
+                            }else{
+                                $product = test_input($_POST["product"]);
+                            }
+                            
                             if (empty($_POST["monday"])){
                                 $MonErr = $Err;
                             }else{
@@ -375,8 +419,6 @@
                             $change6 = $Sunday - $Saturday;
                             
                         }
-
-
                         function test_input($data){
                             $data = trim($data);
                             $data = stripslashes($data);
@@ -391,12 +433,7 @@
                         <div class="div_design" style="padding-left: 10px;">
                             <h1>Statistics</h1>
                             <form method="post" class="form_design" style="font-size: 18px;" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                                Production: <select name="product" style="font-size: 18px;">
-                                    <option value="Apple MacBook Air M1 2020">Apple MacBook Air M1 2020</option>
-                                    <option value="Asus VivoBook Go 14">Asus VivoBook Go 14</option>
-                                    <option value="MSI GF63 Thin">MSI GF63 Thin</option>
-                                    <option value="MSI Gaming Bravo 15">MSI Gaming Bravo 15</option>
-                                </select>
+                                Production: <input type="text" name="product" style="width: 250px;"><span class="error"><?php print $proErr ?></span>
                                 <br><br>
                                 Monday: <input type="number" name="monday"> <span class="error"><?php print $MonErr?></span>
                                 <br><br>
@@ -478,6 +515,7 @@
         function hide_Login(){
             document.getElementById('login_screen').style.display = "none";
         }
+        
     </script>
 
     <script>
