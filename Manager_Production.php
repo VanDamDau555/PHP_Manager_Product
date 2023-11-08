@@ -4,10 +4,12 @@
         <title>Manager Product Each Week</title>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
         <style>
             html, body {
                 width: 100%;
                 margin: 0;
+                font-family:'Sans-serif';
             }
             body {
                 background-color: white;
@@ -22,25 +24,6 @@
             p {margin-left: 40px;}
             input {width: 120px;
                 height: 24px;
-            }
-
-            .div_head {
-                width: 100%;
-                height: 200px;
-                background-image: url('/Image/header1.jpg');
-                background-size: 100% 200px;
-                background-repeat: no-repeat;
-                position: relative;
-                border-bottom: 1px solid black;
-                animation-name: headpage;
-                animation-duration: 12s;
-                animation-delay: 4s;
-                animation-iteration-count: infinite;
-            }
-            @keyframes headpage {
-                0%  {background-image: url('/Image/header1.jpg')}
-                50% {background-image: url('/Image/header2.jpg')}
-                100%{background-image: url('/Image/header3.jpg')}
             }
 
             ul {
@@ -93,12 +76,12 @@
 
 
             /*Tu nghi add button with each slide*/
-            .container {position: relative;}
-            .container img {
+            .mycontainer {position: relative;}
+            .mycontainer img {
                 width: 100%;
                 height: 40px;
             }
-            .container .btn {
+            .mycontainer .btn {
                 position: absolute;
                 transform: translate(-50%, -50%);
                 -ms-transform: translate(-50%, -50%);
@@ -112,8 +95,12 @@
                 text-align: center;
             }
 
-            .container .btn:hover {
+            .mycontainer .btn:hover {
                 background-color: rgb(15, 7, 180);
+            }
+
+            .container label {
+                font-size: 20px;
             }
 
             .error {
@@ -195,19 +182,18 @@
                     <li><button onclick="show_Sp()">Products</button></li>
                     <li><button onclick="show_Tk()">Statistic</button></li>
                     <li><button onclick="show_Lh()">Contact</button></li>
-                    <li style="float: right;"><button onclick="show_Login()">Login</button></li>
-                    <li><button><?php echo "<p>".$login_current."<p>";?></button></li>
+                    <li style="float: right;"><button onclick="show_Login()">Log out</button></li>
                 </ul>
 
             </nav>
-            <nav style="">
+            <nav>
                 <div class="w3-display-container" style="width:100%; height: 250px;">
-                    <div class="mySlides container">
+                    <div class="mySlides mycontainer">
                         <img src="/Image/header1.jpg" style="width:100%; height: 250px;">
                         <button class="btn" onclick="show_Login()" style="top: 20%; left: 50%">Log in Now!</button>
                     </div>
 
-                    <div class="mySlides container">
+                    <div class="mySlides mycontainer">
                         <img src="/Image/header2.jpg" style="width:100%; height: 250px;">
                         <button class="btn" style="top: 35%; left: 90%">View All Product</button>
                     </div>
@@ -215,7 +201,7 @@
                     
                     <img class="mySlides" src="/Image/header3.jpg" style="width:100%; height: 250px">
                     
-                    <div class="mySlides container">
+                    <div class="mySlides mycontainer">
                         <img src="/Image/header4.jpg" style="width:100%; height: 250px;">
                         <i class="fa fa-thumbs-up" style="position: absolute; top: 25%; left: 60%"></i>
                         <i class="fa fa-thumbs-down" style="position: absolute; top: 25%; left: 70%"></i>
@@ -235,10 +221,91 @@
             
             
             <div id="sp">
-                <p>Something</p>
-                <?php
-                    echo $login_current;
+                <!--PHP Code for display Add Product-->
+                <?php require_once 'connect.php' ?>
+                <?php 
+                    if (isset($_POST['add'])){
+                        $ten_sp = $_POST["ten_sp"];
+                        $id_sp = $_POST["id_sp"];
+                        $gia_sp = $_POST["gia_sp"];
+                        $soluong_sp = $_POST["soluong_sp"];
+                        $anh_sp = $_POST["anh_sp"];
+
+                        if ($conn -> query("INSERT INTO products (ten_sp, id_sp, soluong_sp, gia_sp, anh_sp) VALUES (N'$ten_sp', N'$id_sp', N'$soluong_sp', N'$gia_sp', N'$anh_sp')")){
+                            echo "<script>alert('Add successed');</script>";
+                        } else{
+                            echo "<script>alert('Add not successed');</script>";
+                        }
+                    }
+                    $conn -> close();
                 ?>
+
+                <!--Show image product-->
+                <h2>All Product</h2>
+                <div style="width: 100%; height: 300px;">
+                    <p>Show all products</p>
+                </div>
+
+                <h2 style="background-color: lightgreen; width: 75%;">Add New Product Into Storage</h2>
+                <div class="container" style="border: 2px solid black; position: relative">
+                    <form method="POST" action="" style="width: 100%; position: absolute">
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="ten_sp">Tên Sản phẩm: </label>  
+                            <div class="col-md-4">
+                                <input id="ten_sp" name="ten_sp" placeholder="Nhập tên sản phẩm" class="form-control input-md" required="" type="text">
+                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="product_id">Id sản phẩm:</label>  
+                            <div class="col-md-4">
+                                <input id="id_sp" name="id_sp" placeholder="Nhập Id" class="form-control input-md" required="" type="text">
+                                
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="soluong_sp">Số lượng:</label>  
+                            <div class="col-md-4">
+                                <input id="soluong_sp" name="soluong_sp" placeholder="Nhập số lượng" class="form-control input-md" required="" type="text">
+                                
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="gia_sp">Giá bán: </label>  
+                            <div class="col-md-4">
+                                <input id="gia_sp" name="gia_sp" placeholder="Nhập giá sản phẩm" class="form-control input-md" required="" type="text">
+                                
+                            </div>
+                        </div>
+            
+
+                        <!-- File Button --> 
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="anh_sp">Nguồn ảnh:</label>
+                            <div class="col-md-4">
+                                <input id="anh_sp" name="Nhập nguồn ảnh" class="input-file" type="file">
+                            </div>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="add"></label>
+                            <div class="col-md-4">
+                                <button id="add" name="add" class="btn btn-primary">Add Product</button>
+                            </div>
+                        </div>
+
+                        
+                    </form>
+                    <img src="/Image/database.jpg" alt="source_data" style="padding: 10px; width: 50%; height: 500px; position: absolute; left: 48%;">
+                    
+                </div>
             </div>
 
             
@@ -347,7 +414,7 @@
                         </form>
                     </div>
                     <div class="div_design">
-                        <h1 style="align: center;">Sale Chart</h1>
+                        <h1 style="text-align: center;">Sale Chart</h1>
                         <canvas id="sale_Chart" style="position: relative;width: 99.9%; height:86%; background-color: white; border: 1px solid black;">
                             
                         </canvas>
