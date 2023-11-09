@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 08, 2023 lúc 04:35 AM
+-- Thời gian đã tạo: Th10 09, 2023 lúc 08:42 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.2.4
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `products`
+-- Cơ sở dữ liệu: `manager_products`
 --
 
 -- --------------------------------------------------------
@@ -29,10 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `products` (
   `ten_sp` varchar(60) NOT NULL,
-  `id_sp` varchar(8) NOT NULL,
+  `id_sp` varchar(16) NOT NULL,
   `soluong_sp` int(11) NOT NULL,
   `gia_sp` int(11) NOT NULL,
-  `anh_sp` text NOT NULL
+  `anh_sp` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -40,9 +40,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`ten_sp`, `id_sp`, `soluong_sp`, `gia_sp`, `anh_sp`) VALUES
-('Apple MacBook Air M1', 'L_1', 50, 20000, '0'),
-('MSI GF63', 'L_2', 500, 25000, 'Book1.jpg'),
-('MSI GF63', 'L_2', 500, 25000, '');
+('Apple MacBook Air M1 2020', 'L_1', 720, 18900, 'L_1.jpg'),
+('Asus VivoBook Go 14', 'L_2', 690, 15600, 'L_2.jpg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
