@@ -2,7 +2,7 @@
 	$dbHost = 'localhost';
 	$dbUsername = 'root';
 	$dbPassword = '';
-    $Database = 'products';
+    $Database = 'Manager_Products';
 
 	$conn = mysqli_connect($dbHost,$dbUsername,$dbPassword, $Database);
 

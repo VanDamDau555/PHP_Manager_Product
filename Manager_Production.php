@@ -1,3 +1,15 @@
+<?php
+
+require_once 'connect.php';
+
+$sql = "SELECT * FROM products";
+
+$result = $conn->query($sql);
+$listsp = $conn->query($sql);
+$result2 = $conn->query($sql);
+
+
+?>
 <!DOCTYPE html>
 <html lang='en_US'>
     <head>
@@ -101,6 +113,7 @@
             /*showProduct_container class */
             .showProduct_container {
                 height: 300px;
+                overflow: auto;
             }
 
             .showProduct_container div {
@@ -166,16 +179,28 @@
                 padding: 10px 18px;
                 background-color: #f44336;
             }
+            
 
             /* 3 menubar */
             #sp {
+                position: static;
                 display: none;
             }
 
             #tk {
                 display: block;
             }
-
+            #check_Block {
+                background-color: #999;
+                position: absolute; 
+                width: 400px; 
+                height: 200px; 
+                display: none; 
+                border: 2px solid blue;
+                border-radius: 15px; 
+                top: 30%; left: 25%;
+            }
+            
             #lh {
                 display: none;
             }
@@ -188,7 +213,7 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
         </script>
     </head>
-    <body onload="draw_Chart()">
+    <body onload="draw_Chart(), check_Value()">
         <!--Main-->
         <div>
             <!-- Heading Web -->
@@ -211,7 +236,7 @@
 
                         <div class="mySlides mycontainer">
                             <img src="/Image/header2.jpg" style="width:100%; height: 250px;">
-                            <a class="btn" style="top: 35%; left: 90%" href="http://localhost/phpmyadmin/index.php?route=/sql&db=products&table=products" target="_blank">View All Product</a>
+                            <a class="btn" style="top: 35%; left: 90%" href="http://localhost/phpmyadmin/index.php?route=/table/sql&db=manager_products&table=products">View All Product</a>
                         </div>
                         
                         
@@ -252,38 +277,33 @@
                                 echo "<script>alert('Add successed');</script>";
                             } else{
                                 echo "<script>alert('Add not successed');</script>";
-                            }
-                            
-                            
+                            }    
                         }
                         $conn -> close();
                     ?>
 
                     <!--Show image product-->
-                    <h2>Some Product</h2>
-
-                    <?php
-                        $source = "D:/Hoc_tap/PHP_Learning/Image/"
-                    ?>
+                    <h2 style="background-color: lightgreen; width: 75%;">Some Product</h2>
                     <div class="showProduct_container">
-                        <div>
-                            <img src='/Image/L_1.jpg' alt="" style="width: 90%; height: 70%; padding-left: 10%;">
-                            <p>Apple MacBook Air M1 2020 <br>
-                                Số lượng: 500</p>
-                        </div>
+                        <?php
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                            <div>                                
+                                <img src="Image/<?php echo $row['anh_sp']; ?>" alt="Product Image" style="width: 90%; height: 70%; padding-left: 10%;" >
+                                <p><b>
+                                    <?php echo $row["ten_sp"]; ?><br>
+                                    Giá bán: <?php echo $row["gia_sp"]. "000"; ?>VND <br>
+                                    Còn hàng: <?php echo $row["soluong_sp"]; ?>
+                                </b></p>
+    
+                            </div>
+                            <?php
 
-                        <div>
-                            <img src='/Image/L_2.jpg' alt="" style="width: 90%; height: 70%; padding-left: 10%;">
-                            <p>Asus VivoBook Go 14 <br>
-                                Số lượng: 660</p>
-                        </div>
-
-                        <div>
-                            <img src='/Image/L_3.jpg' alt="" style="width: 90%; height: 70%; padding-left: 10%;">
-                            <p>MSI G63 Thin 14 <br>
-                                Số lượng: 620</p>
-                        </div>
+                        }
+                        ?>
+                        
                     </div>
+
 
                     <h2 style="background-color: lightgreen; width: 75%;">Add New Product Into Storage</h2>
                     <div class="container" style="border: 2px solid black; position: relative">
@@ -350,9 +370,7 @@
                 
                 <!--Include Vẽ biểu đồ thống kê-->
                 <div id="tk">
-                    <?php require_once 'connect.php'  ?>
                     <?php
-                        print "";
                         print "<h2>Sale in Week</h2>";
 
                         $product = "";
@@ -428,12 +446,20 @@
                         
                     ?>
                     
-                    
+                    <!--Block for Statistic input-->
                     <div class="clearfix">
                         <div class="div_design" style="padding-left: 10px;">
                             <h1>Statistics</h1>
                             <form method="post" class="form_design" style="font-size: 18px;" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                                Production: <input type="text" name="product" style="width: 250px;"><span class="error"><?php print $proErr ?></span>
+                                Production: <select name="product" id="">
+                                    <?php
+                                        while ($row = mysqli_fetch_assoc($result2)) {
+                                            ?>
+                                            <option value="<?php echo $row["ten_sp"]; ?>"><?php echo $row["ten_sp"]; ?></option>
+                                            <?php
+                                        }
+                                    ?>
+                                </select><span class="error"><?php print $proErr ?></span>
                                 <br><br>
                                 Monday: <input type="number" name="monday"> <span class="error"><?php print $MonErr?></span>
                                 <br><br>
@@ -449,27 +475,51 @@
                                 <br><br>
                                 Sunday: <input type="number" name="sunday"> <span class="error"><?php print $SunErr?></span>
                                 <br><br>
-                                <input type="submit" name="submit" value="Submit" style="width: 200px; background-color: red;">  
+                                <input onclick="checkVL(<?php $checking ?>)" type="submit" name="submit" value="Submit" style="width: 200px; background-color: red;">  
                             </form>
                         </div>
-                        <div class="div_design">
+                        <div class="div_design" style="position: relative;">
                             <h1 style="text-align: center;">Sale Chart</h1>
-                            <canvas id="sale_Chart" style="position: relative;width: 99.9%; height:86%; background-color: white; border: 1px solid black;">
+                            <canvas id="sale_Chart" style="position: relative; width: 99.9%; height:82%; background-color: white; border: 1px solid black;">
                                 
                             </canvas>
+
+                            <div id="check_Block">
+                                <h1 style="color: red; padding-top: 5%; text-align: center;">Your Information is wrong</h1>
+                            </div>
                             
                         </div>
                         
                     </div>
                     
+                    <!--Show result after put input-->
+                    <div>
+                        <?php
+                            $total = $Monday+$Tuesday+$Wednesday+$Thursday+$Friday+$Saturday+$Sunday;
+                            $give_sl = 0;
+                            print "<br> <br>";
+                            print "<h3>Collect Information:</h3>";
+                            print "<p>Product: " .$product. "</p>";
+                            print "<p>Total: ".$total."</p>";
+                            
+                            while ($row = mysqli_fetch_assoc($listsp)) {
+                                if ((string)($row["ten_sp"]) == $product){
+                                    $give_sl = $row["soluong_sp"];
+                                    break;
+                                }
+                            }
+
+                            print "<p>Remain: " .$give_sl."</p>";
+
+                        ?>
+
+                        
+                    </div>
                     
-                    <?php
-                        print "<br> <br>";
-                        print "<h3>Collect Information:</h3>";
-                        print "<p>Product: " .$product. "</p>";
-                        print "<p>Total: ".$Monday+$Tuesday+$Wednesday+$Thursday+$Friday+$Saturday+$Sunday."</p><br>";
-                    ?>
+                    
                 </div>
+
+                <!--Contact Block-->
                 <div id="lh">
                     <div>
                         <p>
@@ -479,7 +529,6 @@
                         <p>The project used to present in Applied Informatics Subject.</p>
                     </div>
                 </div>
-
 
             </div>
         </div>
@@ -515,6 +564,16 @@
         function hide_Login(){
             document.getElementById('login_screen').style.display = "none";
         }
+
+        // function check_Value(){
+        //     var total = parseInt(<?php echo $total;?>);
+        //     var remain = parseInt(<?php echo $give_sl;?>);
+        //     if (total > remain){
+        //         document.getElementById("check_Block").style.display = "block";
+        //     }
+        // }
+
+        // setInterval(check_Value(), 1000);
         
     </script>
 
